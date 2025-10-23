@@ -1,10 +1,12 @@
 package racingcar.domain.dto.reponse;
 
+import java.util.List;
+
 public class ResponseUserDto {
-    private String[] carNames;
+    private List<String> carNames;
     private int attemptCount;
 
-    protected ResponseUserDto(String[] carNames) {
+    protected ResponseUserDto(List<String> carNames) {
         this.carNames = carNames;
     }
 
@@ -12,7 +14,7 @@ public class ResponseUserDto {
         this.attemptCount = attemptCount ;
     }
 
-    public String[] convertCarNames() {
+    public List<String> convertCarNames() {
         return carNames;
     }
 

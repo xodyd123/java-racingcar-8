@@ -12,7 +12,6 @@ public class IntConverter implements Converter {
         int converterNumber = 0 ;
         if (userDto instanceof AttemptCountDto) {
             String attemptCount = ((AttemptCountDto) userDto).getAttemptCount();
-            System.out.println("attemptCount = " + attemptCount);
             converterNumber = Integer.parseInt(attemptCount);
         }
         return new ResponseAttemptCountDto(converterNumber);

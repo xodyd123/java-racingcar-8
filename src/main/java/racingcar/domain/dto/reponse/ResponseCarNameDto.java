@@ -1,13 +1,15 @@
 package racingcar.domain.dto.reponse;
 
+import java.util.List;
+
 public class ResponseCarNameDto extends ResponseUserDto {
 
-    public ResponseCarNameDto(String[] carNames) {
+    public ResponseCarNameDto(List<String> carNames) {
         super(carNames);
     }
 
     @Override
-    public String[] convertCarNames() {
+    public List<String> convertCarNames() {
         return super.convertCarNames();
     }
 }

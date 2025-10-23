@@ -1,5 +1,7 @@
 package racingcar.controller;
 
+import racingcar.domain.Car;
+import racingcar.domain.RacingGame;
 import racingcar.domain.converter.Converter;
 import racingcar.domain.converter.IntConverter;
 import racingcar.domain.converter.StringArrayConverter;
@@ -16,6 +18,7 @@ import racingcar.view.InputView;
 import racingcar.view.OutputView;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class UserController {
     private final OutputView outputView;
@@ -30,16 +33,24 @@ public class UserController {
     public void run() {
         outputView.printCarNamesPrompt();
         String carName = validate(new CarNameValidator(inputView.readCarNames()));
-        ResponseUserDto convert = convert(new StringArrayConverter(), new CarNameDto(carName));
         outputView.printAttemptCountPrompt();
         String attemptCount = validate(new AttemptCountValidator(inputView.readAttemptCount()));
-        ResponseUserDto convert1 = convert(new IntConverter(), new AttemptCountDto(attemptCount));
-        if(convert instanceof ResponseCarNameDto) {
-            String[] responseCarNameDto = convert.convertCarNames();
+        initRacingGame(carName, attemptCount);
+    }
+
+    private void initRacingGame(String carName, String attemptCount) {
+        ResponseUserDto convertCarName = convert(new StringArrayConverter(), new CarNameDto(carName));
+        ResponseUserDto convertAttemptCount  = convert(new IntConverter(), new AttemptCountDto(attemptCount));
+        RacingGame racingGame = new RacingGame(convertCarName.convertCarNames());
+        int count = convertAttemptCount.convertAttemptCount();
+        outputView.printRoundResultPrompt();
+        for (int i = 0; i < count; i++) {
+            List<Car> cars = racingGame.play();
+            outputView.printPlayerRoundResult(cars);
         }
-        if(convert1 instanceof ResponseAttemptCountDto) {
-            int num = convert1.convertAttemptCount();
-        }
+        List<String> winnersResult = racingGame.winnerResult(count);
+        outputView.printWinner(winnersResult);
+
     }
 
     public String validate(Validator validator) {

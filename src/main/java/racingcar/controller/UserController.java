@@ -1,12 +1,10 @@
 package racingcar.controller;
 
-import racingcar.domain.Car;
-import racingcar.domain.RacingGame;
+import racingcar.domain.racing.Car;
+import racingcar.domain.racing.RacingGame;
 import racingcar.domain.converter.Converter;
 import racingcar.domain.converter.IntConverter;
 import racingcar.domain.converter.StringArrayConverter;
-import racingcar.domain.dto.reponse.ResponseAttemptCountDto;
-import racingcar.domain.dto.reponse.ResponseCarNameDto;
 import racingcar.domain.dto.reponse.ResponseUserDto;
 import racingcar.domain.dto.request.AttemptCountDto;
 import racingcar.domain.dto.request.CarNameDto;
@@ -17,7 +15,6 @@ import racingcar.domain.validator.Validator;
 import racingcar.view.InputView;
 import racingcar.view.OutputView;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class UserController {
@@ -43,15 +40,24 @@ public class UserController {
         ResponseUserDto convertAttemptCount  = convert(new IntConverter(), new AttemptCountDto(attemptCount));
         RacingGame racingGame = new RacingGame(convertCarName.convertCarNames());
         int count = convertAttemptCount.convertAttemptCount();
+        playRacingGame(count, racingGame);
+        winnerResult(racingGame, count);
+    }
+
+    private void playRacingGame(int count, RacingGame racingGame) {
         outputView.printRoundResultPrompt();
         for (int i = 0; i < count; i++) {
             List<Car> cars = racingGame.play();
             outputView.printPlayerRoundResult(cars);
+            outputView.printBlankLine();
         }
+    }
+
+    private void winnerResult(RacingGame racingGame, int count) {
         List<String> winnersResult = racingGame.winnerResult(count);
         outputView.printWinner(winnersResult);
-
     }
+
 
     public String validate(Validator validator) {
         return validator.validate();

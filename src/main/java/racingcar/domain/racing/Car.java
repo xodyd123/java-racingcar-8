@@ -1,9 +1,6 @@
-package racingcar.domain;
-
-import camp.nextstep.edu.missionutils.Randoms;
+package racingcar.domain.racing;
 
 public class Car {
-    private static final int MIN_RANDOM_TO_MOVE = 3;
     private final String name ;
     private int position ;
 
@@ -11,11 +8,21 @@ public class Car {
         this.name = name;
     }
 
-    public void racing(){
-        int baseLine = Randoms.pickNumberInRange(0, 9);
-        if(baseLine > MIN_RANDOM_TO_MOVE){
-            position ++ ;
+    public void racing(NumberProvider numberProvider , MoveRule moveRule) {
+        int baseLine = numberProvider.generateNumbers();
+        if(moveRule.MoveRule(baseLine)) {
+            move() ;
         }
+        stop();
+    }
+
+    public void move() {
+        position ++ ;
+        return ;
+    }
+
+    public void stop(){
+        return ;
     }
 
     public String getName() {

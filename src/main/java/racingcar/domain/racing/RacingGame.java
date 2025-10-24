@@ -1,4 +1,4 @@
-package racingcar.domain;
+package racingcar.domain.racing;
 
 import java.util.List;
 
@@ -18,7 +18,7 @@ public class RacingGame {
     }
 
     private void racing(){
-        cars.stream().forEach(car -> {car.racing();});
+        cars.stream().forEach(car -> {car.racing(new RandomNumberProvider() , new ThresholdMoveRule());});
     }
 
     public List<String> winnerResult(int maxNumber) {

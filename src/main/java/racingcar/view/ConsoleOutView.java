@@ -1,8 +1,6 @@
 package racingcar.view;
 
-import org.w3c.dom.ls.LSOutput;
-import racingcar.domain.Car;
-import racingcar.domain.RacingGame;
+import racingcar.domain.racing.Car;
 
 import java.util.List;
 
@@ -41,7 +39,13 @@ public class ConsoleOutView implements OutputView {
         for (String s : winners) {
             winnersResult += s + ", ";
         }
+
         System.out.println(PROMPT_WINNER + " : " + winnersResult.substring(0, winnersResult.length() - 2));
+    }
+
+    @Override
+    public void printBlankLine() {
+        System.out.println();
     }
 
 
